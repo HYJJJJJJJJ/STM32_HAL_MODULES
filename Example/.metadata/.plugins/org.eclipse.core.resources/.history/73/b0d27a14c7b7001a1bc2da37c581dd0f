@@ -1,0 +1,18 @@
+/*
+ * Uart_App.h
+ *
+ *  Created on: Jun 27, 2020
+ *      Author: HYJ
+ */
+
+#ifndef INC_UART_APP_H_
+#define INC_UART_APP_H_
+
+#include "usart.h"
+
+typedef struct UART_COMMON
+{
+
+};
+
+#endif /* INC_UART_APP_H_ */

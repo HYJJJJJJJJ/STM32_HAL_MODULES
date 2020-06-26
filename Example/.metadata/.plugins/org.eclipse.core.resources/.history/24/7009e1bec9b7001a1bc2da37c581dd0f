@@ -1,0 +1,18 @@
+/*
+ * Uart_App.c
+ *
+ *  Created on: Jun 27, 2020
+ *      Author: HYJ
+ */
+
+#include "Uart_App.h"
+
+void uart_printf(struct UART_COMMON this,char *fmt, ...) {
+	u16 i;
+	va_list ap;
+	va_start(ap, fmt);
+	vsprintf((char*) this.tx_buf, fmt, ap);
+	va_end(ap);
+	i = strlen((const char*) this.tx_buf);		//此次发送数据的长度
+	HAL_UART_Transmit(&this.uart_handle, (uint8_t*) this.tx_buf, i, 0xffff);
+}

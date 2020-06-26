@@ -1,0 +1,30 @@
+/*
+ * Uart_App.h
+ *
+ *  Created on: Jun 27, 2020
+ *      Author: HYJ
+ */
+
+#ifndef INC_UART_APP_H_
+#define INC_UART_APP_H_
+
+#include "usart.h"
+#include <sys.h>
+
+#define MAX_RX_LENGTH 128
+#define MAX_TX_LENGTH 128
+
+enum UART_PROT{
+	USART1=1,USART2,USART3,UART4,UART5
+};
+
+typedef struct
+{
+	UART_HandleTypeDef uart_handle;
+	u8 rx_flag;
+	u8 rx_buf[MAX_RX_LENGTH];
+	u8 tx_buf[MAX_TX_LENGTH];
+	void (*uprintf)(UART_COMMON *this,char *fmt, ...);
+}UART_COMMON;
+
+#endif /* INC_UART_APP_H_ */
