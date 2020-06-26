@@ -1,3 +1,6 @@
+STM32CubeMX.AskDoCodeGenerationOnIocSave=false
+STM32CubeMX.AskDoSaveAllOnCodeGeneration=false
+STM32CubeMX.AskSwitchToCubeMxPerspective=false
 STM32CubeMX.FirmwareRepositoryPath=C\:/Users/16330/STM32Cube/Repository/
 STM32CubeMX.UpdaterCheck=false
 STM32CubeMX.UpdaterCheckInterval=5
