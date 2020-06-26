@@ -1,0 +1,2 @@
+# STM32_HAL_MODULES
+使用HAL库驱动STM32F1 MCU进行部分外设与模块的驱动库及例程
