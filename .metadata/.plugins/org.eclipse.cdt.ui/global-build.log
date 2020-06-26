@@ -1,0 +1,31 @@
+17:07:22 **** Incremental Build of configuration Debug for project Uart_Echo_Example ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DSTM32F103xE -DUSE_HAL_DRIVER -DDEBUG -c -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/usart.o"
+arm-none-eabi-gcc -o "Uart_Echo_Example.elf" @"objects.list"   -mcpu=cortex-m3 -T"G:\STM32_HAL_MODULES\Example\Uart_Echo_Example\STM32F103ZETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Uart_Echo_Example.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Uart_Echo_Example.elf
+ 
+arm-none-eabi-objdump -h -S  Uart_Echo_Example.elf  > "Uart_Echo_Example.list"
+arm-none-eabi-objcopy  -O binary  Uart_Echo_Example.elf  "Uart_Echo_Example.bin"
+arm-none-eabi-size   Uart_Echo_Example.elf 
+   text	   data	    bss	    dec	    hex	filename
+  11032	    120	   1656	  12808	   3208	Uart_Echo_Example.elf
+Finished building: default.size.stdout
+ 
+Finished building: Uart_Echo_Example.bin
+Finished building: Uart_Echo_Example.list
+ 
+ 
+17:07:28 **** Incremental Build of configuration Debug for project Uart_Echo_Example ****
+make -j8 all 
+arm-none-eabi-size   Uart_Echo_Example.elf 
+   text	   data	    bss	    dec	    hex	filename
+  11032	    120	   1656	  12808	   3208	Uart_Echo_Example.elf
+Finished building: default.size.stdout
+ 
+17:07:40 **** Incremental Build of configuration Debug for project Uart_Echo_Example ****
+make -j8 all 
+arm-none-eabi-size   Uart_Echo_Example.elf 
+   text	   data	    bss	    dec	    hex	filename
+  11032	    120	   1656	  12808	   3208	Uart_Echo_Example.elf
+Finished building: default.size.stdout
+ 

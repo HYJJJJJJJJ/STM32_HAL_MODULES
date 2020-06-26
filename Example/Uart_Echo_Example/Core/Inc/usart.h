@@ -60,7 +60,7 @@ typedef struct UART_COMMON{
 void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-void Uart_init(struct UART_COMMON *this, u8 port);		//串口初始化，port参数填入u8类型的UART_PORT枚举变量
+UART_COMMON *Uart_init(struct UART_COMMON *this, u8 port);		//串口初始化，port参数填入u8类型的UART_PORT枚举变量
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

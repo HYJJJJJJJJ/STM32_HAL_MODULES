@@ -718,3 +718,13 @@
 2020-06-27 01:42:33,477 [INFO] ProjectBuilder:1703 - Time for Copy CMSIS : 1mS.
 2020-06-27 01:42:33,479 [INFO] ProjectBuilder:1703 - Time for Copy CMSIS : 0mS.
 2020-06-27 02:04:48,588 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 2020-06-27 02:04:48.586:INFO:oejs.session:Stop Help Server: node0 Stopped scavenging
+2020-06-27 02:17:41,936 [INFO] Activator:176 - 
+
+
+2020-06-27 02:17:41,940 [INFO] Activator:177 - !SESSION log4j initialized
+2020-06-27 02:17:45,710 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 2020-06-27 02:17:45.704:INFO::Start Help Server: Logging initialized @16271ms to org.eclipse.jetty.util.log.StdErrLog
+2020-06-27 02:17:45,881 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 2020-06-27 02:17:45.879:INFO:oejs.session:Start Help Server: DefaultSessionIdManager workerName=node0
+2020-06-27 02:17:45,886 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 2020-06-27 02:17:45.882:INFO:oejs.session:Start Help Server: No SessionScavenger set, using defaults
+2020-06-27 02:17:45,891 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 2020-06-27 02:17:45.889:INFO:oejs.session:Start Help Server: node0 Scavenging every 660000ms
+2020-06-27 02:17:45,970 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 2020-06-27 02:17:45.966:INFO:oejs.session:Start Help Server: node0 Scavenging every 726000ms
+2020-06-27 02:19:42,196 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] 2020-06-27 02:19:42.192:INFO:oejs.session:Stop Help Server: node0 Stopped scavenging
