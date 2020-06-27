@@ -614,3 +614,24 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2020-06-27 02:18:29.502
 !MESSAGE 没找到库jar:file:/F:/org.eclipse.cdt.ui_5.7.0.201402142303.jar!/。
+!SESSION 2020-06-27 17:24:08.434 -----------------------------------------------
+eclipse.buildId=Version 1.3.1
+java.version=1.8.0_202
+java.vendor=AdoptOpenJdk
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_CN
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data G:\STM32_HAL_MODULES\Example
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2020-06-27 17:24:17.101
+!MESSAGE Log4j initialized with config file G:\STM32_HAL_MODULES\Example\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2020-06-27 17:24:25.425
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 4 4 2020-06-27 17:24:25.912
+!MESSAGE com.st.stm32cube.ide.mcu.ide/META-INF/version/build_ref file not found, build reference will not be reported into properties
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2020-06-27 17:24:31.918
+!MESSAGE 没找到库jar:file:/F:/42303.jar/。
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2020-06-27 17:24:31.920
+!MESSAGE 没找到库jar:file:/E:/学习资料/org.eclipse.cdt.ui_5.7.0.201402142303.jar/。
