@@ -35,11 +35,11 @@ UART_HandleTypeDef huart1;
 
 /* USART1 init function */
 
-void MX_USART1_UART_Init(void)
+void MX_USART1_UART_Init(u32 baud)
 {
 
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = baud;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -157,11 +157,11 @@ void uart_printf(struct UART_COMMON *this,char *fmt, ...) {			//通过任意串�
 	HAL_UART_Transmit(&this->uart_handle, (uint8_t*) this->tx_buf, i, 0xffff);
 }
 
-UART_COMMON *Uart_init(struct UART_COMMON *this, u8 port)						//串口的初始化与相关函数注册
+UART_COMMON *new_Uart(struct UART_COMMON *this, u8 port,u32 baud)						//串口的初始化与相关函数注册
 {
 	if(port==EN_USART1){
 		this=(struct UART_COMMON*)calloc(1,sizeof(struct UART_COMMON));
-		MX_USART1_UART_Init();
+		MX_USART1_UART_Init(baud);
 	    HAL_UART_Receive_IT(&huart1, (u8*) aRxBuffer, 1);
 		this->uart_handle=huart1;
 		this->UClearRec=uart_clear_rec;

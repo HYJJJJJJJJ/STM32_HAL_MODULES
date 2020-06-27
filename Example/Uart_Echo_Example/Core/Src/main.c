@@ -83,12 +83,9 @@ int main(void)
   MX_GPIO_Init();
 //  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  uart1_common=Uart_init(uart1_common,EN_USART1);		//初始化串口一 注册相关成员函数
+  uart1_common=new_Uart(uart1_common,EN_USART1,115200);		//初始化串口一 注册相关成员函数
   uart1_common->UPrintf(uart1_common,"UART ECHO EXAMPLE!\r\n");
   /* USER CODE END 2 */
- 
- 
-
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
