@@ -84,7 +84,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USER CODE BEGIN USART1_MspInit 1 */
-    HAL_UART_Receive_IT(&huart1, (u8*) aRxBuffer, 1);
   /* USER CODE END USART1_MspInit 1 */
   }
 }
@@ -158,15 +157,17 @@ void uart_printf(struct UART_COMMON *this,char *fmt, ...) {			//通过任意串�
 	HAL_UART_Transmit(&this->uart_handle, (uint8_t*) this->tx_buf, i, 0xffff);
 }
 
-void Uart_init(struct UART_COMMON *this, u8 port)						//串口的初始化与相关函数注册
+UART_COMMON *Uart_init(struct UART_COMMON *this, u8 port)						//串口的初始化与相关函数注册
 {
 	if(port==EN_USART1){
 		this=(struct UART_COMMON*)calloc(1,sizeof(struct UART_COMMON));
 		MX_USART1_UART_Init();
+	    HAL_UART_Receive_IT(&huart1, (u8*) aRxBuffer, 1);
 		this->uart_handle=huart1;
 		this->UClearRec=uart_clear_rec;
 		this->UPrintf=uart_printf;
 	}
+	return this;
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
