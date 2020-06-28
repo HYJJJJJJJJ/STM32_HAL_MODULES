@@ -1,38 +1,21 @@
-/**
-  ******************************************************************************
-  * File Name          : USART.h
-  * Description        : This file provides code for the configuration
-  *                      of the USART instances.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
-/* Define to prevent recursive inclusion -------------------------------------*/
+/*
+ * usart.h
+ *
+ *  Created on: Jun 29, 2020
+ *      Author: HYJ
+ */
+
 #ifndef __usart_H
 #define __usart_H
 #ifdef __cplusplus
  extern "C" {
 #endif
 
-/* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
+#include "gpio.h"
 
 extern UART_HandleTypeDef huart1;
 
-/* USER CODE BEGIN Private defines */
 #define MAX_RX_LENGTH 128		//最大接收长度
 #define MAX_TX_LENGTH 128		//最大发送长度
 
@@ -55,25 +38,10 @@ typedef struct UART_COMMON{
 	void (*UClearRec)(struct UART_COMMON *this);
 	void (*UPrintf)(struct UART_COMMON *this,char *fmt, ...);
 }UART_COMMON;
-/* USER CODE END Private defines */
 
-void MX_USART1_UART_Init(u32 baud);
-
-/* USER CODE BEGIN Prototypes */
 UART_COMMON *new_Uart(struct UART_COMMON *this, u8 port,u32 baud);		//串口初始化，port参数填入u8类型的UART_PORT枚举变量
-/* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }
 #endif
 #endif /*__ usart_H */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
