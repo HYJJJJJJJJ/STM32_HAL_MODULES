@@ -39,7 +39,7 @@ typedef struct UART_COMMON{
 	void (*UPrintf)(struct UART_COMMON *this,char *fmt, ...);
 }UART_COMMON;
 
-UART_COMMON *new_Uart(struct UART_COMMON *this, u8 port,u32 baud);		//串口初始化，port参数填入u8类型的UART_PORT枚举变量
+UART_COMMON* new_Uart(struct UART_COMMON *this, USART_TypeDef *port, u32 baud);		//串口初始化，port参数填入u8类型的UART_PORT枚举变量
 
 #ifdef __cplusplus
 }
