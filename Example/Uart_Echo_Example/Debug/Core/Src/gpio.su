@@ -1,4 +1,0 @@
-gpio.c:10:6:GPIO_WritePin	16	static
-gpio.c:15:6:GPIO_TogglePin	16	static
-gpio.c:20:15:GPIO_ReadPin	16	static
-gpio.c:25:14:new_Gpio	56	static

@@ -7,67 +7,43 @@
 
 #include "usart.h"
 
+UART_HandleTypeDef huart1;
 u8 aRxBuffer[1]; //HAL库使用的串口接收缓冲
 struct UART_COMMON *uart1_common;
 
-UART_HandleTypeDef huart1;
+void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle) {
+	GPIO_COMMON *u1_txd = NULL, *u1_rxd = NULL;
 
-/* USART1 init function */
-void MX_USART1_UART_Init(u32 baud)
-{
+	if (uartHandle->Instance == USART1) {
+		/* USART1 clock enable */
+		__HAL_RCC_USART1_CLK_ENABLE();
 
-  huart1.Instance = USART1;
-  huart1.Init.BaudRate = baud;
-  huart1.Init.WordLength = UART_WORDLENGTH_8B;
-  huart1.Init.StopBits = UART_STOPBITS_1;
-  huart1.Init.Parity = UART_PARITY_NONE;
-  huart1.Init.Mode = UART_MODE_TX_RX;
-  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart1) != HAL_OK)
-  {
-    Error_Handler();
-  }
+		//    /**USART1 GPIO Configuration
+		//    PA9     ------> USART1_TX
+		//    PA10     ------> USART1_RX
+		//    */
+		u1_txd = new_Gpio(u1_txd, GPIOA, GPIO_PIN_9, GPIO_MODE_AF_PP,
+		GPIO_NOPULL, GPIO_SPEED_FREQ_HIGH);
+		u1_rxd = new_Gpio(u1_rxd, GPIOA, GPIO_PIN_10, GPIO_MODE_INPUT,
+		GPIO_NOPULL, GPIO_SPEED_FREQ_HIGH);
+
+		HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+		HAL_NVIC_EnableIRQ(USART1_IRQn);
+	}
 }
 
-void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
-{
-  GPIO_COMMON *u1_txd=NULL,*u1_rxd=NULL;
+void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle) {
 
-  if(uartHandle->Instance==USART1)
-  {
-    /* USART1 clock enable */
-    __HAL_RCC_USART1_CLK_ENABLE();
-
-    //    /**USART1 GPIO Configuration
-    //    PA9     ------> USART1_TX
-    //    PA10     ------> USART1_RX
-    //    */
-    u1_txd=new_Gpio(u1_txd, GPIOA, GPIO_PIN_9, GPIO_MODE_AF_PP, GPIO_NOPULL, GPIO_SPEED_FREQ_HIGH);
-    u1_rxd=new_Gpio(u1_rxd, GPIOA, GPIO_PIN_10, GPIO_MODE_INPUT, GPIO_NOPULL, GPIO_SPEED_FREQ_HIGH);
-
-    HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(USART1_IRQn);
-  }
+	if (uartHandle->Instance == USART1) {
+		__HAL_RCC_USART1_CLK_DISABLE();
+		HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9 | GPIO_PIN_10);
+		HAL_NVIC_DisableIRQ(USART1_IRQn);
+	}
 }
-
-void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
-{
-
-  if(uartHandle->Instance==USART1)
-  {
-    __HAL_RCC_USART1_CLK_DISABLE();
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9|GPIO_PIN_10);
-    HAL_NVIC_DisableIRQ(USART1_IRQn);
-  }
-} 
 
 void USART1_IRQHandler(void) {
 	u32 timeout = 0;
 	u32 maxDelay = 0x1FFFF;
-#if SYSTEM_SUPPORT_OS	 	//使用OS
-		OSIntEnter();
-	#endif
 
 	HAL_UART_IRQHandler(&huart1);	//调用HAL库中断处理公用函数
 
@@ -88,14 +64,12 @@ void USART1_IRQHandler(void) {
 	}
 }
 
-
-void uart_clear_rec(struct UART_COMMON *this)
-{
-	this->rx_flag=0;
-	this->rx_len=0;
+void uart_clear_rec(struct UART_COMMON *this) {
+	this->rx_flag = 0;
+	this->rx_len = 0;
 }
 
-void uart_printf(struct UART_COMMON *this,char *fmt, ...) {			//通过任意串口发送字符串
+void uart_printf(struct UART_COMMON *this, char *fmt, ...) {	//通过任意串口发送字符串
 	u16 i;
 	va_list ap;
 	va_start(ap, fmt);
@@ -105,16 +79,24 @@ void uart_printf(struct UART_COMMON *this,char *fmt, ...) {			//通过任意串�
 	HAL_UART_Transmit(&this->uart_handle, (uint8_t*) this->tx_buf, i, 0xffff);
 }
 
-UART_COMMON *new_Uart(struct UART_COMMON *this, u8 port,u32 baud)						//串口的初始化与相关函数注册
+UART_COMMON* new_Uart(struct UART_COMMON *this, USART_TypeDef *port, u32 baud)	//串口的初始化与相关函数注册
 {
-	if(port==EN_USART1){
-		this=(struct UART_COMMON*)calloc(1,sizeof(struct UART_COMMON));
-		MX_USART1_UART_Init(baud);
-	    HAL_UART_Receive_IT(&huart1, (u8*) aRxBuffer, 1);
-		this->uart_handle=huart1;
-		this->UClearRec=uart_clear_rec;
-		this->UPrintf=uart_printf;
+	this = (struct UART_COMMON*) calloc(1, sizeof(struct UART_COMMON));
+	this->uart_handle.Instance = port;
+	this->uart_handle.Init.BaudRate = baud;
+	this->uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
+	this->uart_handle.Init.StopBits = UART_STOPBITS_1;
+	this->uart_handle.Init.Parity = UART_PARITY_NONE;
+	this->uart_handle.Init.Mode = UART_MODE_TX_RX;
+	this->uart_handle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	this->uart_handle.Init.OverSampling = UART_OVERSAMPLING_16;
+	if (HAL_UART_Init(&this->uart_handle) != HAL_OK) {
+		Error_Handler();
 	}
+	HAL_UART_Receive_IT(&this->uart_handle, (u8*) aRxBuffer, 1);
+	huart1=this->uart_handle;
+	this->UClearRec = uart_clear_rec;
+	this->UPrintf = uart_printf;
 	return this;
 }
 
@@ -125,11 +107,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 				{
 			if ((uart1_common->rx_flag) & 0x40) //接收到了0x0d
 					{
-				if (aRxBuffer[0] != 0x0a)
-				{
+				if (aRxBuffer[0] != 0x0a) {
 					uart_clear_rec(uart1_common); //接收错误,重新开始
-				}
-				else
+				} else
 					uart1_common->rx_flag |= 0x80;	//接收完成了
 			} else //还没收到0X0D
 			{
@@ -137,8 +117,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 					uart1_common->rx_flag |= 0x40;
 				else {
 					uart1_common->rx_buf[uart1_common->rx_len++] = aRxBuffer[0];
-					if (uart1_common->rx_len > (MAX_RX_LENGTH - 1))
-					{
+					if (uart1_common->rx_len > (MAX_RX_LENGTH - 1)) {
 						uart_clear_rec(uart1_common);	//接收错误,重新开始
 					}
 				}
